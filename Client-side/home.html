@@ -1,0 +1,27 @@
+<script>
+    const auth=localStorage.getItem('user')
+    if(!auth){
+        location.href="http://localhost/NCE-PROJECT/Client-side/login.html"
+    }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <Span id="user">Hi
+    </Span>
+    <button onclick="logout()">Logout</button>
+</body>
+<script>
+     const name=JSON.parse(auth).result.name;
+    document.getElementById('user').innerHTML=`Hi ${name}`;
+    const logout=()=>{
+        localStorage.clear();
+        location.href="http://localhost/NCE-PROJECT/Client-side/login.html"
+    };
+</Script>
+</html>

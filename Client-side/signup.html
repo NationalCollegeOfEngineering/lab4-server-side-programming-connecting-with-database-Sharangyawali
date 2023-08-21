@@ -1,0 +1,49 @@
+
+<script>
+    const auth=localStorage.getItem('user')
+    if(auth){
+        location.href="http://localhost/NCE-PROJECT/Client-side/home.html"
+    }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+</head>
+<body>
+    <form method="post" onsubmit='event.preventDefault(); signupCall()'>
+        <label for="name">Name:</label><br/>
+        <input type="text" name="name" id="name" placeholder="Enter your name" minlength="4" maxlength="16" required><br/>
+        <label for="email">Email:</label><br/>
+        <input type="email" name="email" id="email" placeholder="Enter your email" required>
+        <br/>
+        <label for="password">Password:</label><br/>
+        <input type="password" name="password" id="password" placeholder="Enter your password" minlength="6" required>
+        <br/>     
+        <button type="submit">SignUp</button>
+    </form>
+    <script>
+        const signupCall=async()=>{
+            console.log('clicked')
+            const name=document.getElementById('name').value;
+            const email=document.getElementById('email').value;
+            const password=document.getElementById('password').value;
+        let result= await fetch('http://localhost:3003/register',{
+            method: "post",
+            body: JSON.stringify({name,email,password}),
+            headers: { "Content-Type": "application/json" },
+      });
+      console.log("done")
+      let final=await result.json();
+      console.log(final)
+      if (final.success === false) {
+        alert(final.result)
+      } else if (final.success===true) {
+        location.href="http://localhost/NCE-PROJECT/Client-side/login.html"
+    }
+    };
+    </script>
+</body>
+</html>

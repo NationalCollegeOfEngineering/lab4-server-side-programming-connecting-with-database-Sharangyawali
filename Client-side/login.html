@@ -1,0 +1,53 @@
+<script>
+    const auth=localStorage.getItem('user')
+    if(auth){
+        location.href="http://localhost/NCE-PROJECT/Client-side/home.html"
+    }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <label for="name">Name:</label><br/>
+        <input type="text" name="name" id="name" placeholder="Enter your name"><br/>
+        <label for="email">Email:</label><br/>
+        <input type="email" name="enail" id="email" placeholder="Enter your email">
+        <br/>
+        <label for="password">Password:</label><br/>
+        <input type="password" name="password" id="password" placeholder="Enter your password">
+        <br/>     
+        <input type="submit" value="Login" onclick="event.preventDefault(); loginClick()">
+        <br/>
+        <span>Don't have an account?</span>
+        <button onclick="signup()">SignUp</button>
+    </form>
+    <script>
+        const loginClick=async()=>{
+            console.log("clicked")
+            const name=document.getElementById('name').value;
+            const email=document.getElementById('email').value;
+            const password=document.getElementById('password').value;
+            let result= await fetch('http://localhost:3003/login',{
+            method: "post",
+            body: JSON.stringify({name,email,password}),
+            headers: { "Content-Type": "application/json" },
+      });
+      let final=await result.json();
+      if (final.success === false) {
+        alert(final.result)
+      } else if (final.success===true) {
+        location.href="http://localhost/NCE-PROJECT/Client-side/home.html"
+        localStorage.setItem("user",JSON.stringify(final))
+    }
+        }
+        const signup=()=>{
+            event.preventDefault();
+            location.href="http://localhost/NCE-PROJECT/Client-side/signup.html";
+        }
+    </script>
+</body>
+</html>
